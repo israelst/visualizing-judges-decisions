@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-from bottle import route, run, static_file, view, redirect
+from bottle import route, run, request, static_file, view, redirect
 from pymongo import Connection
 
 from most_frequent_location import where_is
@@ -23,9 +23,10 @@ def server_static(filepath):
 def index():
     return static_file('index.html', root='.')
 
-@route('/where-is/<value>')
-def most_frequent_location(value):
+@route('/where-is')
+def most_frequent_location():
     docs = coll.find()
+    value = request.query.q
     field = 'filtered_tokens'
     result = [where_is(value, doc[field]) for doc in docs]
     return dict(result=result)
