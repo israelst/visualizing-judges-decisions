@@ -1,5 +1,5 @@
-body {
-    font: 10px sans-serif;
+.bar {
+    font-size: 10px;
 }
 
 .bar rect {
@@ -17,3 +17,7 @@ body {
     shape-rendering: crispEdges;
 }
 
+#histogram{
+    width: 480px;
+    margin: 0 auto;
+}
