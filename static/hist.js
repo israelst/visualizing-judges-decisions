@@ -1,5 +1,5 @@
 function hist(data){
-    var values = data.result.reduce(function(x,y){return x.concat(y)});
+    var values = data.positions.reduce(function(x,y){return x.concat(y)});
     // A formatter for counts.
     var formatCount = d3.format(",.0f");
 
