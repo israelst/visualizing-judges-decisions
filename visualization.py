@@ -19,13 +19,14 @@ def server_static(filepath):
     return static_file(filepath, root=STATIC_PATH)
 
 @route('/')
-#@view('download_statistics')
+@view('index')
 def index():
-    return static_file('index.html', root='.')
+    return {}
 
 @route('/where-is')
 def most_frequent_location():
-    docs = coll.find()
+    #return static_file('hist.json', root=STATIC_PATH)
+    docs = coll.find().limit(120)
     value = request.query.q
     field = 'filtered_tokens'
     result = [where_is(value, doc[field]) for doc in docs]
@@ -33,6 +34,6 @@ def most_frequent_location():
 
 
 if __name__ == "__main__":
-    from bottle import debug
-    debug(True)
+    import bottle
+    bottle.debug(True)
     run(host='0.0.0.0', reloader=True)
