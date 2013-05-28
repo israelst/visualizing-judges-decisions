@@ -29,12 +29,12 @@ def most_frequent_location():
     docs = coll.find().limit(120)
     value = request.query.q
     field = 'filtered_tokens'
-    positions = []
     decisions = []
     for doc in docs:
-        positions.append(where_is(value, doc[field]))
-        decisions.append([doc['_id'], doc['clean_decision']])
-    return dict(positions=positions, decisions=decisions)
+        decisions.append({'id': doc['_id'],
+                          'text': doc['clean_decision'],
+                          'positions': where_is(value, doc[field])})
+    return dict(decisions=decisions)
 
 
 if __name__ == "__main__":

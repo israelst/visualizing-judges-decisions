@@ -1,19 +1,46 @@
-function hist(data){
-    var values = data.positions.reduce(function(x,y){return x.concat(y)});
+function hist(response){
+    var decisions = response.decisions;
+    var values = decisions.reduce(function(x,y){
+        var positions = x.positions || x;
+        return positions.concat(y.positions);
+    });
+
+    function brushed(){
+        var range = brush.extent();
+        if(range==[0,0]){
+            range = [0,1];
+        }
+        console.log(range);
+        var brushed_decisions = decisions.filter(function(decision, index, array){
+            return decision.positions.some(function(pos){
+                return pos >= range[0] && pos <= range[1];
+            });
+        });
+        $('#decisions').empty();
+        $('#decisions').append('<div class="alert alert-success">Mostrando <strong>' + brushed_decisions.length + '</strong> decisões.</div>');
+        brushed_decisions.forEach(function(decision){
+            $('#decisions').append('<pre>' + decision.text + '</pre>');
+        });
+    }
+
     // A formatter for counts.
     var formatCount = d3.format(",.0f");
 
     var margin = {top: 10, right: 30, bottom: 30, left: 30},
-        width = 960/2 - margin.left - margin.right,
+        width = 960 - margin.left - margin.right,
         height = 500/2 - margin.top - margin.bottom;
 
     var x = d3.scale.linear()
         .domain([0, 1])
         .range([0, width]);
 
+    var brush = d3.svg.brush()
+        .x(x)
+        .on("brush", brushed);
+
     // Generate a histogram using twenty uniformly-spaced bins.
     var data = d3.layout.histogram()
-        .bins(x.ticks(20))
+        .bins(x.ticks(50))
         (values);
 
     var y = d3.scale.linear()
@@ -52,4 +79,12 @@ function hist(data){
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
+
+    svg.append("g")
+        .attr("class", "x brush")
+        .call(brush)
+        .selectAll("rect")
+        .attr("y", -6)
+        .attr("height", height + 7);
+    brushed();
 }

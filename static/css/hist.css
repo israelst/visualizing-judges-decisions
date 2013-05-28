@@ -18,6 +18,12 @@
 }
 
 #histogram{
-    width: 480px;
+    width: 960px;
     margin: 0 auto;
+}
+
+.brush .extent {
+    stroke: #444;
+    fill-opacity: .4;
+    shape-rendering: crispEdges;
 }
