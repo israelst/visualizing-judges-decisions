@@ -26,7 +26,7 @@ def index():
 @route('/where-is')
 def most_frequent_location():
     #return static_file('hist.json', root=STATIC_PATH)
-    docs = coll.find().limit(120)
+    docs = coll.find()#.limit(1200)
     value = request.query.q
     field = 'filtered_tokens'
     decisions = []

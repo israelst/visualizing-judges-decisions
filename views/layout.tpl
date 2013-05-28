@@ -64,7 +64,7 @@
       <header id="overview" class="jumbotron subhead">
           <div class="container">
               <h1>Visualizador de Decisões</h1>
-              <p>Ferramenta para inspecionar o as decisões baixadas do TJRJ</p>
+              <p>Distribuição de palavras nas decisões emitidas por Turma Recursal no JEC do TJRJ</p>
               </div>
       </header>
     <div class="container">
