@@ -11,7 +11,7 @@ from most_frequent_location import where_is
 STATIC_PATH = os.path.join(os.path.dirname(__file__), 'static')
 
 connection = Connection()
-db = connection['h5']
+db = connection['top_five_5_years']
 coll = db['decisions']
 
 @route('/static/<filepath:path>')
@@ -28,7 +28,7 @@ def most_frequent_location():
     #return static_file('hist.json', root=STATIC_PATH)
     docs = coll.find()#.limit(1200)
     value = request.query.q
-    field = 'filtered_tokens'
+    field = 'tokens'
     decisions = []
     for doc in docs:
         decisions.append({'id': doc['_id'],
