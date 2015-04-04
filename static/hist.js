@@ -49,6 +49,7 @@ function hist(response){
 
     var xAxis = d3.svg.axis()
         .scale(x)
+        .tickFormat(d3.format(".0%"))
         .orient("bottom");
 
     var svg = d3.select("#histogram").append("svg")

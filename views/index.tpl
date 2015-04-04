@@ -58,7 +58,6 @@
 <p> <a href="http://stanford.edu/~garylee/bibly/">Bibly</a> </p>
 
 <h2>ToDo</h2>
-<p>Replace y axis to percentege</p>
 <p>Suport keyphrases search</p>
 <p>Highlight search in result</p>
 <p>Do not require js to search and plot, just for brush</p>
