@@ -1,14 +1,14 @@
 function hist(response){
     var decisions = response.decisions;
-    var values = decisions.reduce(function(x,y){
+    var values = decisions.reduce(function(x, y){
         var positions = x.positions || x;
         return positions.concat(y.positions);
     });
 
     function brushed(){
         var range = brush.extent();
-        if(range==[0,0]){
-            range = [0,1];
+        if(range == [0, 0]){
+            range = [0, 1];
         }
         console.log(range);
         var brushed_decisions = decisions.filter(function(decision, index, array){
