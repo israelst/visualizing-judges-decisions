@@ -16,8 +16,8 @@ function hist(response){
                 return pos >= range[0] && pos <= range[1];
             });
         });
-        $('#decisions').empty();
-        $('#decisions').append('<div class="alert alert-success">Mostrando <strong>' + brushed_decisions.length + '</strong> decisões.</div>');
+        document.getElementById('decisions').innerHTML = ('<div class="alert alert-success">Mostrando <strong>' +
+                                                         brushed_decisions.length + '</strong> decisões.</div>');
         brushed_decisions.forEach(function(decision){
             $('#decisions').append('<pre>' + decision.text + '</pre>');
         });
