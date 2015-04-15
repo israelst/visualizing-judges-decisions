@@ -1,14 +1,13 @@
 %def head():
     <link rel="stylesheet" href="static/css/hist.css" />
-    <!--script src="http://d3js.org/d3.v2.min.js?2.10.0"></script-->
     <script src="static/d3.v2.min.js"></script>
     <script src="static/hist.js"></script>
     <script>
-        $(document).ready(function(){
-            $(document.forms.search).submit(function() {
-                $('#histogram').empty()
+        window.addEventListener('load', function(){
+            document.forms.search.addEventListener('submit', function(event){
+                event.preventDefault();
+                document.getElementById('histogram').innerHTML = '';
                 d3.json('where-is?q=' + this.q.value, hist);
-                return false;
             });
         });
     </script>
