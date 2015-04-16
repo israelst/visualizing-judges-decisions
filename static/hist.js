@@ -18,9 +18,11 @@ function hist(response){
         });
         document.getElementById('decisions').innerHTML = ('<div class="alert alert-success">Mostrando <strong>' +
                                                          brushed_decisions.length + '</strong> decisões.</div>');
-        brushed_decisions.forEach(function(decision){
-            $('#decisions').append('<pre>' + decision.text + '</pre>');
-        });
+
+        var pre = d3.select('#decisions').selectAll('pre').data(brushed_decisions);
+        pre.enter().append('pre');
+        pre.exit().remove();
+        pre.text(function(d){ return d.text;});
     }
 
     // A formatter for counts.
