@@ -34,7 +34,7 @@ function hist(response){
 
     var brush = d3.svg.brush()
         .x(x)
-        .on("brush", brushed);
+        .on("brushend", brushed);
 
     // Generate a histogram using twenty uniformly-spaced bins.
     var data = d3.layout.histogram()
