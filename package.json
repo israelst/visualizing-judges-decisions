@@ -1,0 +1,15 @@
+{
+  "name": "visualizing-judges-decisions",
+  "version": "0.0.0",
+  "description": "Distribuição de palavras nas decisões emitidas por Turma Recursal no JEC do TJRJ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:israelst/visualizing-judges-decisions.git"
+  },
+  "author": "Israel Teixeira <israelst@gmail.com>",
+  "license": "GPL3"
+}
