@@ -7,10 +7,6 @@ function hist(response){
 
     function brushed(){
         var range = brush.extent();
-        if(range == [0, 0]){
-            range = [0, 1];
-        }
-        console.log(range);
         var brushed_decisions = decisions.filter(function(decision, index, array){
             return decision.positions.some(function(pos){
                 return pos >= range[0] && pos <= range[1];
@@ -89,5 +85,4 @@ function hist(response){
         .selectAll("rect")
         .attr("y", -6)
         .attr("height", height + 7);
-    brushed();
 }
