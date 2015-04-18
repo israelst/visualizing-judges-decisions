@@ -11,5 +11,8 @@
     "url": "git@github.com:israelst/visualizing-judges-decisions.git"
   },
   "author": "Israel Teixeira <israelst@gmail.com>",
-  "license": "GPL3"
+  "license": "GPL3",
+  "dependencies": {
+    "d3": "^3.5.5"
+  }
 }
