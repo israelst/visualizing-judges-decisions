@@ -2,15 +2,7 @@
     <link rel="stylesheet" href="static/css/hist.css" />
     <script src="static/d3.v2.min.js"></script>
     <script src="static/hist.js"></script>
-    <script>
-        window.addEventListener('load', function(){
-            document.forms.search.addEventListener('submit', function(event){
-                event.preventDefault();
-                document.getElementById('histogram').innerHTML = '';
-                d3.json('where-is?q=' + this.q.value, hist);
-            });
-        });
-    </script>
+    <script src="static/index.js"></script>
 %end
 
 <h2>Preprocessamento dos dados</h2>
