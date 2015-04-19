@@ -1,8 +1,6 @@
 %def head():
     <link rel="stylesheet" href="static/css/hist.css" />
-    <script src="static/d3.v2.min.js"></script>
-    <script src="static/hist.js"></script>
-    <script src="static/index.js"></script>
+    <script src="static/build.js"></script>
 %end
 
 <h2>Preprocessamento dos dados</h2>

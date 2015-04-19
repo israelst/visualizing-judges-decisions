@@ -1,4 +1,6 @@
-function hist(response){
+var d3 = require('d3');
+
+exports.hist = function hist(response){
     var decisions = response.decisions;
     var values = decisions.reduce(function(x, y){
         var positions = x.positions || x;
