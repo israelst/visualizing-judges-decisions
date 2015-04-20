@@ -4,6 +4,8 @@
   "description": "Distribuição de palavras nas decisões emitidas por Turma Recursal no JEC do TJRJ",
   "main": "index.js",
   "scripts": {
+    "hint": "jshint static/*.js",
+    "browserify": "browserify ./static/index.js -o ./static/build.js",
     "build": "browserify ./static/index.js -o ./static/build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +19,7 @@
     "d3": "^3.5.5"
   },
   "devDependencies": {
-    "browserify": "^9.0.8"
+    "browserify": "^9.0.8",
+    "jshint": "^2.7.0"
   }
 }
