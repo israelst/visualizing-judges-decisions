@@ -1,4 +1,6 @@
-function hist(response){
+var d3 = require("d3");
+
+exports.hist = function hist(response){
     var decisions = response.decisions;
     var values = decisions.reduce(function(x, y){
         var positions = x.positions || x;
@@ -6,17 +8,17 @@ function hist(response){
     });
 
     function brushed(){
-        var range = brush.extent();
-        var brushed_decisions = decisions.filter(function(decision, index, array){
-            return decision.positions.some(function(pos){
-                return pos >= range[0] && pos <= range[1];
+        var range = brush.extent(),
+            brushed_decisions = decisions.filter(function(decision){
+                return decision.positions.some(function(pos){
+                    return pos >= range[0] && pos <= range[1];
+                });
             });
-        });
-        document.getElementById('decisions').innerHTML = ('<div class="alert alert-success">Mostrando <strong>' +
-                                                         brushed_decisions.length + '</strong> decisões.</div>');
+        document.getElementById("decisions").innerHTML = ("<div class='alert alert-success'>Mostrando <strong>" +
+                                                         brushed_decisions.length + "</strong> decisões.</div>");
 
-        var pre = d3.select('#decisions').selectAll('pre').data(brushed_decisions);
-        pre.enter().append('pre');
+        var pre = d3.select("#decisions").selectAll("pre").data(brushed_decisions);
+        pre.enter().append("pre");
         pre.exit().remove();
         pre.text(function(d){ return d.text;});
     }
@@ -85,4 +87,4 @@ function hist(response){
         .selectAll("rect")
         .attr("y", -6)
         .attr("height", height + 7);
-}
+};
