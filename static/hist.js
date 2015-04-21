@@ -1,11 +1,12 @@
 var d3 = require("d3");
 
+function concatPositions(positions, decision){
+    return positions.concat(decision.positions);
+}
+
 exports.hist = function hist(response){
-    var decisions = response.decisions;
-    var values = decisions.reduce(function(x, y){
-        var positions = x.positions || x;
-        return positions.concat(y.positions);
-    });
+    var decisions = response.decisions,
+        positions = decisions.reduce(concatPositions, []);
 
     function brushed(){
         var range = brush.extent(),
@@ -41,7 +42,7 @@ exports.hist = function hist(response){
     // Generate a histogram using twenty uniformly-spaced bins.
     var data = d3.layout.histogram()
         .bins(x.ticks(50))
-        (values);
+        (positions);
 
     var y = d3.scale.linear()
         .domain([0, d3.max(data, function(d) { return d.y; })])
