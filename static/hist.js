@@ -4,21 +4,26 @@ function concatPositions(positions, decision){
     return positions.concat(decision.positions);
 }
 
+function decisionsInside(range, decisions){
+    return decisions.filter(function(decision){
+        return decision.positions.some(function(pos){
+            return pos >= range[0] && pos <= range[1];
+        });
+    });
+}
+
 exports.hist = function hist(response){
     var decisions = response.decisions,
         positions = decisions.reduce(concatPositions, []);
 
     function brushed(){
         var range = brush.extent(),
-            brushed_decisions = decisions.filter(function(decision){
-                return decision.positions.some(function(pos){
-                    return pos >= range[0] && pos <= range[1];
-                });
-            });
-        document.getElementById("decisions").innerHTML = ("<div class='alert alert-success'>Mostrando <strong>" +
-                                                         brushed_decisions.length + "</strong> decisões.</div>");
+            brushedDecisions = decisionsInside(range, decisions);
 
-        var pre = d3.select("#decisions").selectAll("pre").data(brushed_decisions);
+        document.getElementById("decisions").innerHTML = ("<div class='alert alert-success'>Mostrando <strong>" +
+                                                         brushedDecisions.length + "</strong> decisões.</div>");
+
+        var pre = d3.select("#decisions").selectAll("pre").data(brushedDecisions);
         pre.enter().append("pre");
         pre.exit().remove();
         pre.text(function(d){ return d.text;});
