@@ -18,12 +18,16 @@ exports.hist = function hist(response){
 
     function brushed(){
         var range = brush.extent(),
-            brushedDecisions = decisionsInside(range, decisions);
+            brushedDecisions = decisionsInside(range, decisions),
+            decisionsContainer = d3.select("#decisions"),
+            pre = decisionsContainer
+                .selectAll("pre")
+                .data(brushedDecisions);
 
-        document.getElementById("decisions").innerHTML = ("<div class='alert alert-success'>Mostrando <strong>" +
-                                                         brushedDecisions.length + "</strong> decisões.</div>");
+        decisionsContainer.html("<div class='alert alert-success'>" +
+                                "Mostrando <strong>" + brushedDecisions.length + "</strong> " +
+                                "decisões.");
 
-        var pre = d3.select("#decisions").selectAll("pre").data(brushedDecisions);
         pre.enter().append("pre");
         pre.exit().remove();
         pre.text(function(d){ return d.text;});
