@@ -62,8 +62,13 @@ exports.hist = function hist(response){
         .tickFormat(d3.format(".0%"))
         .orient("bottom");
 
-    var svg = d3.select("#histogram").append("svg")
-        .attr("width", width + margin.left + margin.right)
+    var svg = d3.select("#histogram").select("svg");
+    if(svg.empty()){
+        console.log(42);
+        svg = d3.select("#histogram").append("svg");
+    }
+
+    svg.attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
