@@ -80,8 +80,7 @@ exports.hist = function hist(response){
         .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
 
     bar.append("rect")
-        .attr("x", 1)
-        .attr("width", x(data[0].dx) - 1)
+        .attr("width", x(data[0].dx))
         .attr("height", function(d) { return height - y(d.y); });
 
     bar.append("text")
