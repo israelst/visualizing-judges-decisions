@@ -4,7 +4,7 @@
 
 .bar rect {
     fill: steelblue;
-    stroke: #000;
+    stroke: #fff;
     stroke-width: 1;
     shape-rendering: crispEdges;
 }
