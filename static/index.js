@@ -1,10 +1,13 @@
 var d3 = require("d3"),
-    hist = require("./hist").hist;
+    Hist = require("./hist").Hist;
 
 window.addEventListener("load", function(){
     document.forms.search.addEventListener("submit", function(event){
         event.preventDefault();
-        document.getElementById("histogram").innerHTML = "";
-        d3.json("where-is?q=" + this.q.value, hist);
+        var svg = d3.select("#histogram").append("svg"),
+            histogram = new Hist(svg);
+        d3.json("where-is?q=" + this.q.value, function(response){
+            histogram.plot(response.decisions);
+        });
     });
 });
