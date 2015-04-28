@@ -25,6 +25,7 @@ exports.Hist = function(svg){
             .scale(x)
             .tickFormat(d3.format(".0%"))
             .orient("bottom"),
+
         brush = d3.svg.brush().x(x),
 
         container = svg.attr("width", width + margin.left + margin.right)
@@ -45,12 +46,22 @@ exports.Hist = function(svg){
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
+    this.setBrush = function(brushend){
+        var that = this;
+        brush.on("brushend", function (){
+            var range = brush.extent();
+            brushend(decisionsInside(range, that.decisions));
+        });
+    };
 
     this.plot = function(decisions){
+        this.decisions = decisions;
         var positions = decisions.reduce(concatPositions, []);
+
         var data = d3.layout.histogram()
             .bins(x.ticks(50))
             (positions);
+
         var y = d3.scale.linear()
             .domain([0, d3.max(data, function(d) { return d.y; })])
             .range([height, 0]);
@@ -73,23 +84,6 @@ exports.Hist = function(svg){
             .attr("x", x(data[0].dx) / 2)
             .attr("text-anchor", "middle")
             .text(function(d) { return formatCount(d.y); });
-
-        brush.on("brushend", function brushed(){
-            var range = brush.extent(),
-                brushedDecisions = decisionsInside(range, decisions),
-                decisionsContainer = d3.select("#decisions"),
-                pre = decisionsContainer
-                    .selectAll("pre")
-                    .data(brushedDecisions);
-
-            decisionsContainer.html("<div class='alert alert-success'>" +
-                                    "Mostrando <strong>" + brushedDecisions.length + "</strong> " +
-                                    "decisões.");
-
-            pre.enter().append("pre");
-            pre.exit().remove();
-            pre.text(function(d){ return d.text;});
-        });
     };
 
 };
