@@ -12,6 +12,12 @@ function decisionsInside(range, decisions){
     });
 }
 
+function translate(x, y){
+    return function(selection){
+        selection.attr("transform", "translate(" + x + "," + y + ")");
+    };
+}
+
 exports.Hist = function(svg){
     var margin = {top: 10, right: 30, bottom: 30, left: 30},
         width = 960 - margin.left - margin.right,
@@ -28,11 +34,18 @@ exports.Hist = function(svg){
 
         brush = d3.svg.brush().x(x),
 
-        container = svg.attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")"),
+        container = svg.append("g"),
         bars = container.append("g").attr("class", "bars");
+
+        svg.attr("width", width + margin.left + margin.right)
+           .attr("height", height + margin.top + margin.bottom);
+
+        container.call(translate(margin.left, margin.top));
+
+    container.append("g")
+        .attr("class", "x axis")
+        .call(translate(0, height))
+        .call(xAxis);
 
     container.append("g")
         .attr("class", "x brush")
@@ -40,11 +53,6 @@ exports.Hist = function(svg){
         .selectAll("rect")
         .attr("y", -6)
         .attr("height", height + 7);
-
-    container.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
 
     this.setBrush = function(brushend){
         var that = this;
