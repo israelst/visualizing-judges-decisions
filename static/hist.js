@@ -56,21 +56,21 @@ exports.Hist = function(svg){
 
     this.plot = function(decisions){
         this.decisions = decisions;
-        var positions = decisions.reduce(concatPositions, []);
+        var positions = decisions.reduce(concatPositions, []),
 
-        var data = d3.layout.histogram()
-            .bins(x.ticks(50))
-            (positions);
+            data = d3.layout.histogram()
+                .bins(x.ticks(50))
+                (positions),
 
-        var y = d3.scale.linear()
-            .domain([0, d3.max(data, function(d) { return d.y; })])
-            .range([height, 0]);
+            y = d3.scale.linear()
+                .domain([0, d3.max(data, function(d) { return d.y; })])
+                .range([height, 0]),
 
-        var barGroup = bars.selectAll(".bar")
-            .data(data)
-            .enter().append("g")
-            .attr("class", "bar")
-            .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+            barGroup = bars.selectAll(".bar")
+                .data(data)
+                .enter().append("g")
+                .attr("class", "bar")
+                .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
 
         barGroup.append("rect")
             .attr("width", x(data[0].dx))
