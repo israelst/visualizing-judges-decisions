@@ -12,93 +12,87 @@ function decisionsInside(range, decisions){
     });
 }
 
-exports.hist = function hist(response){
-    var decisions = response.decisions,
-        positions = decisions.reduce(concatPositions, []);
+function translate(x, y){
+    return function(selection){
+        selection.attr("transform", "translate(" + x + "," + y + ")");
+    };
+}
 
-    function brushed(){
-        var range = brush.extent(),
-            brushedDecisions = decisionsInside(range, decisions),
-            decisionsContainer = d3.select("#decisions"),
-            pre = decisionsContainer
-                .selectAll("pre")
-                .data(brushedDecisions);
-
-        decisionsContainer.html("<div class='alert alert-success'>" +
-                                "Mostrando <strong>" + brushedDecisions.length + "</strong> " +
-                                "decisões.");
-
-        pre.enter().append("pre");
-        pre.exit().remove();
-        pre.text(function(d){ return d.text;});
-    }
-
-    // A formatter for counts.
-    var formatCount = d3.format(",.0f");
-
+exports.Hist = function(svg){
     var margin = {top: 10, right: 30, bottom: 30, left: 30},
         width = 960 - margin.left - margin.right,
-        height = 500/2 - margin.top - margin.bottom;
+        height = 500/2 - margin.top - margin.bottom,
 
-    var x = d3.scale.linear()
-        .domain([0, 1])
-        .range([0, width]);
+        x = d3.scale.linear()
+            .domain([0, 1])
+            .range([0, width]),
 
-    var brush = d3.svg.brush()
-        .x(x)
-        .on("brushend", brushed);
+        xAxis = d3.svg.axis()
+            .scale(x)
+            .tickFormat(d3.format(".0%"))
+            .orient("bottom"),
 
-    // Generate a histogram using twenty uniformly-spaced bins.
-    var data = d3.layout.histogram()
-        .bins(x.ticks(50))
-        (positions);
+        brush = d3.svg.brush().x(x),
 
-    var y = d3.scale.linear()
-        .domain([0, d3.max(data, function(d) { return d.y; })])
-        .range([height, 0]);
+        container = svg.append("g"),
+        bars = container.append("g").attr("class", "bars");
 
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .tickFormat(d3.format(".0%"))
-        .orient("bottom");
+        svg.attr("width", width + margin.left + margin.right)
+           .attr("height", height + margin.top + margin.bottom);
 
-    var svg = d3.select("#histogram").select("svg");
-    if(svg.empty()){
-        console.log(42);
-        svg = d3.select("#histogram").append("svg");
-    }
+        container.call(translate(margin.left, margin.top));
 
-    svg.attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    var bar = svg.selectAll(".bar")
-        .data(data)
-        .enter().append("g")
-        .attr("class", "bar")
-        .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
-
-    bar.append("rect")
-        .attr("width", x(data[0].dx))
-        .attr("height", function(d) { return height - y(d.y); });
-
-    bar.append("text")
-        .attr("dy", ".75em")
-        .attr("y", 6)
-        .attr("x", x(data[0].dx) / 2)
-        .attr("text-anchor", "middle")
-        .text(function(d) { return formatCount(d.y); });
-
-    svg.append("g")
+    container.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+        .call(translate(0, height))
         .call(xAxis);
 
-    svg.append("g")
+    container.append("g")
         .attr("class", "x brush")
         .call(brush)
         .selectAll("rect")
         .attr("y", -6)
         .attr("height", height + 7);
+
+    this.setBrush = function(brushend){
+        var that = this;
+        brush.on("brushend", function (){
+            var range = brush.extent();
+            brushend(decisionsInside(range, that.decisions));
+        });
+    };
+
+    this.plot = function(decisions){
+        this.decisions = decisions;
+        var positions = decisions.reduce(concatPositions, []),
+
+            data = d3.layout.histogram()
+                .bins(x.ticks(50))
+                (positions),
+
+            y = d3.scale.linear()
+                .domain([0, d3.max(data, function(d) { return d.y; })])
+                .range([height, 0]),
+
+            barGroup = bars.selectAll(".bar")
+                .data(data)
+                .enter().append("g")
+                .attr("class", "bar")
+                .attr("transform", function(d) {
+                    return "translate(" + x(d.x) + "," + y(d.y) + ")";
+                });
+
+        barGroup.append("rect")
+            .attr("width", x(data[0].dx))
+            .attr("height", function(d) { return height - y(d.y); });
+
+        barGroup.append("text")
+            .attr("dy", ".75em")
+            .attr("y", 6)
+            .attr("x", x(data[0].dx) / 2)
+            .attr("text-anchor", "middle")
+            .text(function(d) { return d3.format(",.0f")(d.y); });
+    };
+
 };
+
