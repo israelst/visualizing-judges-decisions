@@ -76,14 +76,12 @@ exports.Hist = function(svg){
             .attr("width", x(data[0].dx))
             .attr("height", function(d) { return height - y(d.y); });
 
-        var formatCount = d3.format(",.0f");
-
         barGroup.append("text")
             .attr("dy", ".75em")
             .attr("y", 6)
             .attr("x", x(data[0].dx) / 2)
             .attr("text-anchor", "middle")
-            .text(function(d) { return formatCount(d.y); });
+            .text(function(d) { return d3.format(",.0f")(d.y); });
     };
 
 };
