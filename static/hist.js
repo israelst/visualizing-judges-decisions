@@ -78,7 +78,9 @@ exports.Hist = function(svg){
                 .data(data)
                 .enter().append("g")
                 .attr("class", "bar")
-                .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+                .attr("transform", function(d) {
+                    return "translate(" + x(d.x) + "," + y(d.y) + ")";
+                });
 
         barGroup.append("rect")
             .attr("width", x(data[0].dx))
