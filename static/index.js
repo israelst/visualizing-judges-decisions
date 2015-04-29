@@ -2,11 +2,11 @@ var d3 = require("d3"),
     Hist = require("./hist").Hist;
 
 window.addEventListener("load", function(){
+    var svg = d3.select("#histogram").append("svg"),
+        histogram = new Hist(svg);
+
     document.forms.search.addEventListener("submit", function(event){
         event.preventDefault();
-        var svg = d3.select("#histogram").append("svg"),
-            histogram = new Hist(svg);
-
         histogram.setBrush(function(brushedDecisions){
             var decisionsContainer = d3.select("#decisions"),
                 pre = decisionsContainer
