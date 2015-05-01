@@ -100,6 +100,8 @@ exports.Hist = function(svg){
             })
             .selectAll("rect")
                 .attr("height", function(d) {
+                    // TODO: A better solution may involve bind the data again.
+                    d = this.parentNode.__data__;
                     return height - y(d.y);
                 });
     };
