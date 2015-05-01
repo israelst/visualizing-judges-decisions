@@ -37,10 +37,10 @@ exports.Hist = function(svg){
         container = svg.append("g"),
         bars = container.append("g").attr("class", "bars");
 
-        svg.attr("width", width + margin.left + margin.right)
-           .attr("height", height + margin.top + margin.bottom);
+    svg.attr("width", width + margin.left + margin.right)
+       .attr("height", height + margin.top + margin.bottom);
 
-        container.call(translate(margin.left, margin.top));
+    container.call(translate(margin.left, margin.top));
 
     container.append("g")
         .attr("class", "x axis")
