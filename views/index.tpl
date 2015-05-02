@@ -22,20 +22,23 @@
 
 <hr />
 
-<h2>Preprocessamento dos dados</h2>
+<h2>Obtenção e preprocessamento inicial dos dados.</h2>
 <ol>
-    <!--li>Download das decisões</li>
+    <li>Download das decisões</li>
     <li>Remoção do html</li>
     <li>Tokenization</li>
-    <li>Armazenamento no MongoDB</li-->
+    <li>Armazenamento no MongoDB</li>
+</ol>
+<h2>Preprocessamento dos dados para visualizar onde as palavras ocorrem</h2>
+<ol>
     <li>Buscar decisões no MongoDB</li>
     <li>Para cada decisão, retornar lista de posições normalizadas</li>
     <li>Criar lista de posições
-    <!--pre><code>var values = decisions.reduce(function(x,y){
+    <pre><code>var values = decisions.reduce(function(x,y){
      var positions = x.positions || x;
      return positions.concat(y.positions);
 });</code>
-</pre--></li>
+</pre></li>
 </ol>
 
 <hr />
