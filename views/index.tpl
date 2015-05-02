@@ -3,24 +3,6 @@
     <script src="static/build.js"></script>
 %end
 
-<h2>Preprocessamento dos dados</h2>
-<ol>
-    <!--li>Download das decisões</li>
-    <li>Remoção do html</li>
-    <li>Tokenization</li>
-    <li>Armazenamento no MongoDB</li-->
-    <li>Buscar decisões no MongoDB</li>
-    <li>Para cada decisão, retornar lista de posições normalizadas</li>
-    <li>Criar lista de posições
-    <!--pre><code>var values = decisions.reduce(function(x,y){
-     var positions = x.positions || x;
-     return positions.concat(y.positions);
-});</code>
-</pre--></li>
-</ol>
-
-<hr />
-
 <h2>Onde estão as palavras chave das decisões?</h2>
 <form name="search" action="where-is" class="well">
 <fieldset>
@@ -37,6 +19,24 @@
 
 <div id="decisions">
 </div>
+
+<hr />
+
+<h2>Preprocessamento dos dados</h2>
+<ol>
+    <!--li>Download das decisões</li>
+    <li>Remoção do html</li>
+    <li>Tokenization</li>
+    <li>Armazenamento no MongoDB</li-->
+    <li>Buscar decisões no MongoDB</li>
+    <li>Para cada decisão, retornar lista de posições normalizadas</li>
+    <li>Criar lista de posições
+    <!--pre><code>var values = decisions.reduce(function(x,y){
+     var positions = x.positions || x;
+     return positions.concat(y.positions);
+});</code>
+</pre--></li>
+</ol>
 
 <hr />
 
