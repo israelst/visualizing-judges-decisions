@@ -22,6 +22,7 @@ window.addEventListener("load", function(){
             pre.text(function(d){ return d.text;});
         });
 
+        histogram.plot([]);
         d3.json("where-is?q=" + this.q.value, function(response){
             histogram.plot(response.decisions);
         });

@@ -79,12 +79,12 @@ exports.Hist = function(svg){
                 .enter().append("g")
                 .attr("class", "bar")
                 .attr("transform", function(d) {
-                    return "translate(" + x(d.x) + "," + y(d.y) + ")";
+                    return "translate(" + x(d.x) + "," + y.range()[0] + ")";
                 });
 
         barGroup.append("rect")
             .attr("width", x(data[0].dx))
-            .attr("height", function(d) { return height - y(d.y); });
+            .attr("height", 0);
 
         barGroup.append("text")
             .attr("dy", ".75em")
@@ -92,6 +92,18 @@ exports.Hist = function(svg){
             .attr("x", x(data[0].dx) / 2)
             .attr("text-anchor", "middle")
             .text(function(d) { return d3.format(",.0f")(d.y); });
+
+        bars.selectAll(".bar")
+            .transition()
+            .attr("transform", function(d) {
+                return "translate(" + x(d.x) + "," + y(d.y) + ")";
+            })
+            .selectAll("rect")
+                .attr("height", function(d) {
+                    // TODO: A better solution may involve bind the data again.
+                    d = this.parentNode.__data__;
+                    return height - y(d.y);
+                });
     };
 
 };
