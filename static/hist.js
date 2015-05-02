@@ -62,12 +62,12 @@ exports.Hist = function(svg){
         });
     };
 
-    this.plot = function(decisions){
+    this.plot = function(decisions, qtyOfBins){
         this.decisions = decisions;
         var positions = decisions.reduce(concatPositions, []),
 
             data = d3.layout.histogram()
-                .bins(x.ticks(50))
+                .bins(x.ticks(qtyOfBins || 50))
                 (positions),
 
             y = d3.scale.linear()
@@ -83,7 +83,6 @@ exports.Hist = function(svg){
                 });
 
         barGroup.append("rect")
-            .attr("width", x(data[0].dx))
             .attr("height", 0);
 
         barGroup.append("text")
@@ -99,6 +98,7 @@ exports.Hist = function(svg){
                 return "translate(" + x(d.x) + "," + y(d.y) + ")";
             })
             .selectAll("rect")
+                .attr("width", x(data[0].dx))
                 .attr("height", function(d) {
                     // TODO: A better solution may involve bind the data again.
                     d = this.parentNode.__data__;
