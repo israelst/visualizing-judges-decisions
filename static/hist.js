@@ -74,36 +74,27 @@ exports.Hist = function(svg){
                 .domain([0, d3.max(data, function(d) { return d.y; })])
                 .range([height, 0]),
 
-            barGroup = bars.selectAll(".bar")
-                .data(data)
-                .enter().append("g")
-                .attr("class", "bar")
-                .attr("transform", function(d) {
-                    return "translate(" + x(d.x) + "," + y.range()[0] + ")";
-                });
+            bar = bars.selectAll("rect").data(data);
 
-        barGroup.append("rect")
+        bar.enter()
+            .append("rect")
+            .attr("y", function() {
+                return y.range()[0];
+            })
             .attr("height", 0);
 
-        barGroup.append("text")
-            .attr("dy", ".75em")
-            .attr("y", 6)
-            .attr("x", x(data[0].dx) / 2)
-            .attr("text-anchor", "middle")
-            .text(function(d) { return d3.format(",.0f")(d.y); });
-
-        bars.selectAll(".bar")
+        bars.selectAll("rect")
             .transition()
-            .attr("transform", function(d) {
-                return "translate(" + x(d.x) + "," + y(d.y) + ")";
+            .attr("x", function(d) {
+                return x(d.x);
             })
-            .selectAll("rect")
-                .attr("width", x(data[0].dx))
-                .attr("height", function(d) {
-                    // TODO: A better solution may involve bind the data again.
-                    d = this.parentNode.__data__;
-                    return height - y(d.y);
-                });
+            .attr("y", function(d) {
+                return y(d.y);
+            })
+            .attr("width", x(data[0].dx))
+            .attr("height", function(d) {
+                return height - y(d.y);
+            });
     };
 
 };

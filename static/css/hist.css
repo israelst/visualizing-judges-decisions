@@ -1,16 +1,8 @@
-.bar {
-    font-size: 10px;
-}
-
-.bar rect {
+.bars rect {
     fill: steelblue;
     stroke: #fff;
     stroke-width: 1;
     shape-rendering: crispEdges;
-}
-
-.bar text {
-    fill: #fff;
 }
 
 .axis path, .axis line {
