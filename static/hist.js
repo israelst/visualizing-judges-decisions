@@ -83,6 +83,14 @@ exports.Hist = function(svg){
 
             bar = bars.selectAll("rect").data(data);
 
+        bar.exit()
+            .transition()
+            .attr("y", function() {
+                return y.range()[0];
+            })
+            .attr("height", 0)
+            .remove();
+
         bar.enter()
             .append("rect")
             .attr("y", function() {
@@ -91,14 +99,14 @@ exports.Hist = function(svg){
             .attr("height", 0);
 
         bars.selectAll("rect")
-            .transition()
+            .attr("width", x(data[0].dx))
             .attr("x", function(d) {
                 return x(d.x);
             })
+            .transition()
             .attr("y", function(d) {
                 return y(d.y);
             })
-            .attr("width", x(data[0].dx))
             .attr("height", function(d) {
                 return height - y(d.y);
             });
