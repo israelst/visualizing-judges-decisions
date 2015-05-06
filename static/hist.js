@@ -62,12 +62,19 @@ exports.Hist = function(svg){
         });
     };
 
+    this.qtyOfBins = 50;
+
+    this.reset = function(){
+        this.plot([], this.qtyOfBins);
+    };
+
     this.plot = function(decisions, qtyOfBins){
         this.decisions = decisions;
+        this.qtyOfBins = qtyOfBins || this.qtyOfBins;
         var positions = decisions.reduce(concatPositions, []),
 
             data = d3.layout.histogram()
-                .bins(x.ticks(qtyOfBins || 50))
+                .bins(x.ticks(this.qtyOfBins))
                 (positions),
 
             y = d3.scale.linear()

@@ -30,7 +30,7 @@ window.addEventListener("load", function(){
             pre.text(function(d){ return d.text;});
         });
 
-        histogram.plot([], slide.value);
+        histogram.reset();
         d3.json("where-is?q=" + this.q.value, function(response){
             histogram.plot(response.decisions, slide.value);
         });
