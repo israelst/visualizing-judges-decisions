@@ -3,7 +3,15 @@ var d3 = require("d3"),
 
 window.addEventListener("load", function(){
     var svg = d3.select("#histogram").append("svg"),
-        histogram = new Hist(svg);
+        histogram = new Hist(svg),
+
+        slide = document.getElementById("slide"),
+        chosen = document.getElementById("chosen");
+
+    slide.onchange = function(){
+        chosen.textContent = this.value;
+    };
+    slide.onchange();
 
     document.forms.search.addEventListener("submit", function(event){
         event.preventDefault();
@@ -22,9 +30,9 @@ window.addEventListener("load", function(){
             pre.text(function(d){ return d.text;});
         });
 
-        histogram.plot([]);
+        histogram.reset();
         d3.json("where-is?q=" + this.q.value, function(response){
-            histogram.plot(response.decisions);
+            histogram.plot(response.decisions, +slide.value);
         });
     });
 });

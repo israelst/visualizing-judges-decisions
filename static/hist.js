@@ -62,48 +62,55 @@ exports.Hist = function(svg){
         });
     };
 
-    this.plot = function(decisions){
+    this.qtyOfBins = 50;
+
+    this.reset = function(){
+        this.plot([], this.qtyOfBins);
+    };
+
+    this.plot = function(decisions, qtyOfBins){
         this.decisions = decisions;
+        this.qtyOfBins = qtyOfBins || this.qtyOfBins;
         var positions = decisions.reduce(concatPositions, []),
 
             data = d3.layout.histogram()
-                .bins(x.ticks(50))
+                .bins(this.qtyOfBins)
                 (positions),
 
             y = d3.scale.linear()
                 .domain([0, d3.max(data, function(d) { return d.y; })])
                 .range([height, 0]),
 
-            barGroup = bars.selectAll(".bar")
-                .data(data)
-                .enter().append("g")
-                .attr("class", "bar")
-                .attr("transform", function(d) {
-                    return "translate(" + x(d.x) + "," + y.range()[0] + ")";
-                });
+            bar = bars.selectAll("rect").data(data);
 
-        barGroup.append("rect")
-            .attr("width", x(data[0].dx))
+        bar.exit()
+            .transition()
+            .attr("y", function() {
+                return y.range()[0];
+            })
+            .attr("height", 0)
+            .remove();
+
+
+        bar.enter()
+            .append("rect")
+            .attr("y", function() {
+                return y.range()[0];
+            })
             .attr("height", 0);
 
-        barGroup.append("text")
-            .attr("dy", ".75em")
-            .attr("y", 6)
-            .attr("x", x(data[0].dx) / 2)
-            .attr("text-anchor", "middle")
-            .text(function(d) { return d3.format(",.0f")(d.y); });
-
-        bars.selectAll(".bar")
-            .transition()
-            .attr("transform", function(d) {
-                return "translate(" + x(d.x) + "," + y(d.y) + ")";
+        bars.selectAll("rect")
+            .attr("width", x(data[0].dx))
+            .attr("x", function(d) {
+                return x(d.x);
             })
-            .selectAll("rect")
-                .attr("height", function(d) {
-                    // TODO: A better solution may involve bind the data again.
-                    d = this.parentNode.__data__;
-                    return height - y(d.y);
-                });
+            .transition()
+            .attr("y", function(d) {
+                return y(d.y);
+            })
+            .attr("height", function(d) {
+                return height - y(d.y);
+            });
     };
 
 };

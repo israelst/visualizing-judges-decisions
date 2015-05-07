@@ -7,11 +7,13 @@
 <form name="search" action="where-is" class="well">
 <fieldset>
     <legend>Busca</legend>
-    <!--label for='q'>Palavra chave</label-->
-    <input type="text" name="q" />
-    <!--input type="submit" class="btn icon-search" value='' /-->
+    <input type="text" name="q" placeholder="Palavra chave"/>
     <button type="submit" class="btn"><i class="icon-search"></i></button>
      <span class="help-block">Exemplos de palavra chave: 'voto', 'provimento', 'favorável', 'negado'.</span>
+    <div id="bin-size">
+        <label for="slide">Quantidade de grupos:</label> <span id="chosen"></span>
+        <input id="slide" type="range" min="2" max="100" value="25" />
+    </div>
 </fieldset>
 </form>
 <div id="histogram">
