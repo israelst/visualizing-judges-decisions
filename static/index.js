@@ -32,7 +32,7 @@ window.addEventListener("load", function(){
 
         histogram.reset();
         d3.json("where-is?q=" + this.q.value, function(response){
-            histogram.plot(response.decisions, slide.value);
+            histogram.plot(response.decisions, +slide.value);
         });
     });
 });
