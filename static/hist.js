@@ -74,7 +74,7 @@ exports.Hist = function(svg){
         var positions = decisions.reduce(concatPositions, []),
 
             data = d3.layout.histogram()
-                .bins(x.ticks(this.qtyOfBins))
+                .bins(this.qtyOfBins)
                 (positions),
 
             y = d3.scale.linear()
@@ -90,6 +90,7 @@ exports.Hist = function(svg){
             })
             .attr("height", 0)
             .remove();
+
 
         bar.enter()
             .append("rect")
